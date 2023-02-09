@@ -15,6 +15,12 @@ class BoxofficeViewController: UIViewController {
     private var boxofficeSnapshot = NSDiffableDataSourceSnapshot<Int, BoxofficeRecode>()
     private let refreshControl = UIRefreshControl()
     private let loadingIndicator = UIActivityIndicatorView()
+    private var dateSelectionBarbuttonItem: UIBarButtonItem!
+    private var date: Date = .yesterday {
+        didSet {
+            self.fetchBoxOffice(for: date)
+        }
+    }
     
     init(movieService: MovieService) {
         self.movieService = movieService
@@ -33,12 +39,14 @@ class BoxofficeViewController: UIViewController {
         self.configureSnapshot()
         self.configureHierarchy()
         self.configureConstraint()
+        self.configureDateSelectionBarButtonItem()
+        self.configureNavigationBar()
         self.configureRefreshControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.fetchBoxOffice(for: .yesterday)
+        self.fetchBoxOffice(for: self.date)
     }
 
     private func configureHierarchy() {
@@ -55,6 +63,10 @@ class BoxofficeViewController: UIViewController {
             self.collectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
         ])
     }
+    private func configureNavigationBar() {
+        self.navigationItem.rightBarButtonItem = self.dateSelectionBarbuttonItem
+    }
+    }
 
     private func configureCollectionView() {
         let layout = self.createCollectionViewLayout()
@@ -68,10 +80,26 @@ class BoxofficeViewController: UIViewController {
         self.collectionView.refreshControl = self.refreshControl
         self.refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
     }
-
+    
+    private func configureDateSelectionBarButtonItem() {
+        self.dateSelectionBarbuttonItem = UIBarButtonItem(
+            title: "날짜선택",
+            style: .plain,
+            target: self,
+            action: #selector(presentCalenderView)
+        )
+    }
+    
+    @objc
+    private func presentCalenderView() {
+        let dateSelectionViewController = DateSelectionViewController(date: self.date)
+        dateSelectionViewController.dateSelectionDelegate = self
+        self.present(dateSelectionViewController, animated: true)
+    }
+    
     @objc
     private func refresh() {
-        self.fetchBoxOffice(for: .yesterday)
+        self.fetchBoxOffice(for: self.date)
     }
 
     private func configureSnapshot() {
@@ -81,6 +109,7 @@ class BoxofficeViewController: UIViewController {
     private func updateSnapshot(items: [BoxofficeRecode]) {
         let currentItems = self.boxofficeSnapshot.itemIdentifiers(inSection: 0)
         self.boxofficeSnapshot.deleteItems(currentItems)
+        self.boxofficeDataSource?.apply(self.boxofficeSnapshot)
         self.boxofficeSnapshot.appendItems(items, toSection: 0)
         self.boxofficeDataSource?.apply(self.boxofficeSnapshot)
     }
@@ -157,6 +186,12 @@ extension BoxofficeViewController: UICollectionViewDelegate {
             )
         )
         self.navigationController?.pushViewController(movieDetailViewController, animated: true)
+    }
+}
+
+extension BoxofficeViewController: DateSelectionDelegate {
+    func dateSelection(_ date: Date) {
+        self.date = date
     }
 }
 
