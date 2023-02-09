@@ -8,6 +8,10 @@
 import UIKit
 
 class BoxofficeViewController: UIViewController {
+    enum ViewMode {
+        case list
+        case item
+    }
     private let movieService: MovieService
     
     private var collectionView: UICollectionView!
@@ -16,6 +20,7 @@ class BoxofficeViewController: UIViewController {
     private let refreshControl = UIRefreshControl()
     private let loadingIndicator = UIActivityIndicatorView()
     private var dateSelectionBarbuttonItem: UIBarButtonItem!
+    private var viewMode: ViewMode = .item
     private var date: Date = .yesterday {
         didSet {
             self.fetchBoxOffice(for: date)
