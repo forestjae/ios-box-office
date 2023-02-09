@@ -13,6 +13,10 @@ fileprivate extension Date {
     }
 }
 
+protocol DateSelectionDelegate: AnyObject {
+    func dateSelection(_ date: Date)
+}
+
 class DateSelectionViewController: UIViewController {
     weak var dateSelectionDelegate: DateSelectionDelegate?
     
