@@ -142,11 +142,57 @@ class BoxofficeViewController: UIViewController {
         }
     }
     
-    private func createCollectionViewLayout() -> UICollectionViewLayout {
+    private func createItemCellRegistration() -> UICollectionView.CellRegistration<UICollectionViewCell, BoxofficeRecode> {
+        return UICollectionView.CellRegistration<UICollectionViewCell, BoxofficeRecode> { cell, indexPath, itemIdentifier in
+            var configuration = BoxofficeItemContentView.Configuration()
+
+            configuration.recode = itemIdentifier
+            
+            cell.contentConfiguration = configuration
+        }
+    }
+    
+    private func createCollectionViewListLayout() -> UICollectionViewLayout {
         var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
         configuration.showsSeparators = true
         configuration.backgroundColor = .white
         let layout = UICollectionViewCompositionalLayout.list(using: configuration)
+        return layout
+    }
+    
+    private func createCollectionViewItemLayout() -> UICollectionViewLayout {
+        let configuration = UICollectionViewCompositionalLayoutConfiguration()
+        configuration.interSectionSpacing = 10
+
+        let layout = UICollectionViewCompositionalLayout(
+            sectionProvider: { _, _ in
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalHeight(1.0)
+                )
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+                item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 5)
+
+                let groupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(0.5),
+                    heightDimension: .absolute(200)
+                )
+
+                let group = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: groupSize,
+                    repeatingSubitem: item,
+                    count: 2
+                )
+                group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 10)
+
+                let section = NSCollectionLayoutSection(group: group)
+
+                return section
+            },
+            configuration: configuration
+        )
+
         return layout
     }
     
