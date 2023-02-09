@@ -20,6 +20,8 @@ class BoxofficeViewController: UIViewController {
     private let refreshControl = UIRefreshControl()
     private let loadingIndicator = UIActivityIndicatorView()
     private var dateSelectionBarbuttonItem: UIBarButtonItem!
+    private var viewModeChangeBarButtonItem: UIBarButtonItem!
+    
     private var viewMode: ViewMode = .item
     private var date: Date = .yesterday {
         didSet {
@@ -45,7 +47,9 @@ class BoxofficeViewController: UIViewController {
         self.configureHierarchy()
         self.configureConstraint()
         self.configureDateSelectionBarButtonItem()
+        self.configureViewModeChangeBarButtonItem()
         self.configureNavigationBar()
+        self.configureToolbar()
         self.configureRefreshControl()
     }
     
@@ -68,13 +72,26 @@ class BoxofficeViewController: UIViewController {
             self.collectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
         ])
     }
+    
     private func configureNavigationBar() {
         self.navigationItem.rightBarButtonItem = self.dateSelectionBarbuttonItem
+        self.navigationController?.isToolbarHidden = false
     }
+    
+    private func configureToolbar() {
+        let flexibleItem = UIBarButtonItem(
+            barButtonSystemItem: .flexibleSpace,
+            target: self,
+            action: nil
+        )
+        self.setToolbarItems(
+            [flexibleItem, self.viewModeChangeBarButtonItem, flexibleItem],
+            animated: true
+        )
     }
 
     private func configureCollectionView() {
-        let layout = self.createCollectionViewLayout()
+        let layout = self.createCollectionViewItemLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         self.collectionView = collectionView
@@ -95,6 +112,15 @@ class BoxofficeViewController: UIViewController {
         )
     }
     
+    private func configureViewModeChangeBarButtonItem() {
+        self.viewModeChangeBarButtonItem = UIBarButtonItem(
+            title: "화면모드 변경",
+            style: .plain,
+            target: self,
+            action: #selector(presentChangeViewModeActionSheet)
+        )
+    }
+    
     @objc
     private func presentCalenderView() {
         let dateSelectionViewController = DateSelectionViewController(date: self.date)
@@ -102,6 +128,36 @@ class BoxofficeViewController: UIViewController {
         self.present(dateSelectionViewController, animated: true)
     }
     
+    private func changeViewMode() {
+        switch self.viewMode {
+        case .list:
+            self.viewMode = .item
+            self.collectionView.setCollectionViewLayout(
+                self.createCollectionViewItemLayout(),
+                animated: true
+            )
+        case .item:
+            self.viewMode = .list
+            self.collectionView.setCollectionViewLayout(
+                self.createCollectionViewListLayout(),
+                animated: true
+            )
+        }
+        self.boxofficeDataSource?.applySnapshotUsingReloadData(self.boxofficeSnapshot)
+    }
+    
+    @objc
+    private func presentChangeViewModeActionSheet() {
+        let actionSheet = UIAlertController(title: "화면모드변경", message: nil, preferredStyle: .actionSheet)
+        let viewChangeTitle = self.viewMode == .list ? "아이템" : "리스트"
+        let viewChangeAction = UIAlertAction(title: viewChangeTitle, style: .default) { _ in
+            self.changeViewMode()
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        [viewChangeAction, cancelAction].forEach { actionSheet.addAction($0) }
+        self.present(actionSheet, animated: true)
+    }
+
     @objc
     private func refresh() {
         self.fetchBoxOffice(for: self.date)

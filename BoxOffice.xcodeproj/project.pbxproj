@@ -59,6 +59,8 @@
 		C23A7FFB2976804700F0F348 /* BoxOfficeDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23A7FFA2976804700F0F348 /* BoxOfficeDecodingTests.swift */; };
 		C23A80012976825F00F0F348 /* JSONDecodingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23A7FF229767EF600F0F348 /* JSONDecodingUtility.swift */; };
 		C23A80022976832000F0F348 /* BoxofficeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23A7FEE297505A600F0F348 /* BoxofficeResponse.swift */; };
+		C2726CDF2994B1AE00E9C32C /* DateSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2726CDE2994B1AE00E9C32C /* DateSelectionViewController.swift */; };
+		C2726CE12994CD6F00E9C32C /* BoxofficeItemContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2726CE02994CD6F00E9C32C /* BoxofficeItemContentView.swift */; };
 		C2B19865299095B000D7E0BB /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B19864299095B000D7E0BB /* MovieDetailViewController.swift */; };
 		C2B19868299096A500D7E0BB /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B19867299096A500D7E0BB /* ImageService.swift */; };
 		C2B1986A29909AD200D7E0BB /* ImageSearchEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1986929909AD200D7E0BB /* ImageSearchEndpoint.swift */; };
@@ -116,6 +118,8 @@
 		C23A7FF229767EF600F0F348 /* JSONDecodingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodingUtility.swift; sourceTree = "<group>"; };
 		C23A7FF82976804700F0F348 /* BoxOfficeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoxOfficeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C23A7FFA2976804700F0F348 /* BoxOfficeDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxOfficeDecodingTests.swift; sourceTree = "<group>"; };
+		C2726CDE2994B1AE00E9C32C /* DateSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectionViewController.swift; sourceTree = "<group>"; };
+		C2726CE02994CD6F00E9C32C /* BoxofficeItemContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxofficeItemContentView.swift; sourceTree = "<group>"; };
 		C2B19864299095B000D7E0BB /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		C2B19867299096A500D7E0BB /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		C2B1986929909AD200D7E0BB /* ImageSearchEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchEndpoint.swift; sourceTree = "<group>"; };
@@ -312,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				C22A17A92989037B00F7E792 /* BoxofficeViewController.swift */,
+				C2726CDE2994B1AE00E9C32C /* DateSelectionViewController.swift */,
 				C2B1987F29926E7F00D7E0BB /* View */,
 			);
 			path = Boxoffice;
@@ -374,6 +379,7 @@
 			isa = PBXGroup;
 			children = (
 				C22A17AF298A49A600F7E792 /* BoxofficeListContentView.swift */,
+				C2726CE02994CD6F00E9C32C /* BoxofficeItemContentView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -504,6 +510,7 @@
 				C2B198722990E3E700D7E0BB /* ImageSearchResponse.swift in Sources */,
 				C223C6FE29792C2F00FC3E9E /* NationType.swift in Sources */,
 				C2B1986A29909AD200D7E0BB /* ImageSearchEndpoint.swift in Sources */,
+				C2726CE12994CD6F00E9C32C /* BoxofficeItemContentView.swift in Sources */,
 				C223C6ED2979130000FC3E9E /* Cancellable.swift in Sources */,
 				C2B1987029909D4500D7E0BB /* ImageSearchAPIEndpoint.swift in Sources */,
 				C22A17AE298905DE00F7E792 /* Movie.swift in Sources */,
@@ -515,6 +522,7 @@
 				C22A17B0298A49A600F7E792 /* BoxofficeListContentView.swift in Sources */,
 				C22A17AC298905D900F7E792 /* Boxoffice.swift in Sources */,
 				C223C6E92979112D00FC3E9E /* NetworkError.swift in Sources */,
+				C2726CDF2994B1AE00E9C32C /* DateSelectionViewController.swift in Sources */,
 				C223C6D82978FE0B00FC3E9E /* HTTPMethod.swift in Sources */,
 				C223C6E229790B1B00FC3E9E /* MovieAPIInformationOwner.swift in Sources */,
 				C223C6F1297913CA00FC3E9E /* DefaultNetworkProvider.swift in Sources */,
@@ -694,7 +702,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -721,7 +729,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
