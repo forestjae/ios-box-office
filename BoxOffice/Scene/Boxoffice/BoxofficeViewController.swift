@@ -120,19 +120,29 @@ class BoxofficeViewController: UIViewController {
     }
     
     private func createDataSource() -> UICollectionViewDiffableDataSource<Int, BoxofficeRecode> {
-        let cellRegistration = self.createCellRegistration()
+        let listCellRegistration = self.createListCellRegistration()
+        let itemCellRegistration = self.createItemCellRegistration()
         return UICollectionViewDiffableDataSource(
             collectionView: self.collectionView
         ) { collectionView, indexPath, itemIdentifier in
-            return collectionView.dequeueConfiguredReusableCell(
-                using: cellRegistration,
-                for: indexPath,
-                item: itemIdentifier
-            )
+            switch self.viewMode {
+            case .item:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: itemCellRegistration,
+                    for: indexPath,
+                    item: itemIdentifier
+                )
+            case .list:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: listCellRegistration,
+                    for: indexPath,
+                    item: itemIdentifier
+                )
+            }
         }
     }
     
-    private func createCellRegistration() -> UICollectionView.CellRegistration<UICollectionViewListCell, BoxofficeRecode> {
+    private func createListCellRegistration() -> UICollectionView.CellRegistration<UICollectionViewListCell, BoxofficeRecode> {
         return UICollectionView.CellRegistration<UICollectionViewListCell, BoxofficeRecode> { cell, indexPath, itemIdentifier in
             var configuration = BoxofficeListContentView.Configuration()
 
